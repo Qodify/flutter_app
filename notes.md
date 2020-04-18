@@ -221,3 +221,58 @@ Stateless widgets, like Text or Column, will not change their state. At the mome
 
 The big difference between a Stateless and a State-full Widget is the Internal State in State-full Widgets. Whenever The external input changes **or** it's internal state changes, the UI will update itself, re-render itself.
 
+So, we need a StatefulWidget as our class so that every change in the Widget tree will update the UI.
+
+1. first extend the top class from StatefulWidget
+2. add a second class, named MyAppSate and extend State.
+
+```dart
+class MyApp extends StatefulWidget {
+
+}
+
+class MyAppState extends State{
+  var questionIndex = 0;
+...
+```
+
+Why use two classes? Because state is persistent, but UI is not. We do not want to refresh the state when inputdata changes. For it will reset our state, losing the  "progress" or state we are keeping in it. The Statefulwidget should rebuilt and rerender itself when MyAppState changes and therefore the State changes.
+
+But for the Statfulwidget to update based on the State we must connect the two classes. This is done by:
+
+1. extending myAppState with State\<MyApp>  
+2. in the StatefulWidget, override the CreateState() method and return The Stateclass.
+
+```dart
+class MyApp extends StatefulWidget {
+@override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp>{ ... }
+```
+
+If we now try to run our new code, hmm. It will still not work. That is because we should let the State now it's being updated. If Flutter permitted the UI to be rerendered with every touch on every part of the screen, we would have horrible performance. So we must be specific.
+
+```dart
+class MyApp extends StatefulWidget {
+@override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp>{
+  var questionIndex = 0;    
+  
+  void answerQuestion() {
+    setState(() {
+      questionIndex = questionIndex + 1;
+    });
+      print(questionIndex);
+      ...
+```
+
+! if it doesn't work, try to hard restart the app. 
