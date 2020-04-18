@@ -221,6 +221,10 @@ Stateless widgets, like Text or Column, will not change their state. At the mome
 
 The big difference between a Stateless and a State-full Widget is the Internal State in State-full Widgets. Whenever The external input changes **or** it's internal state changes, the UI will update itself, re-render itself.
 
+So you can add (and also change) properties in a StatelessWidget, there's no way of telling Flutter that it should re-run build() upon such changes.
+
+All widgets (i.e. both Stateless and Stateful) can receive data via their constructors. But only StatefulWidgets can have class properties where they can update values + re-run build().
+
 So, we need a StatefulWidget as our class so that every change in the Widget tree will update the UI.
 
 1. first extend the top class from StatefulWidget
@@ -276,3 +280,18 @@ class MyAppState extends State<MyApp>{
 ```
 
 ! if it doesn't work, try to hard restart the app. 
+
+add in setState() a function with the variabele that changes. setState() is a "trigger" that informs Flutter that it needs to re-run build() of the Widget.
+
+Flutter is pretty smart and efficient. It will rebuild only that Widget for which the data has been updated. 
+
+### private properties
+
+add a leading underscore on the classname to make it private. Now its only usable in this file. you can do the same for variables and methods.
+
+### The Container
+
+![image-20200418152640882](C:\src\flutterprojects\flutter_app\notes.assets\image-20200418152640882.png)
+
+### passing callback functions around
+
