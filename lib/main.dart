@@ -11,15 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0; //properties
-
-  void _answerQuestion() {
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-  }
-
-  var questions = [
+  final questions = const [
     {
       'questionText': "What's your favorite color?",
       'answers': ['Black', 'Red', 'Green', 'White'],
@@ -33,6 +25,16 @@ class _MyAppState extends State<MyApp> {
       'answers': ['Max', 'Max', 'Max', 'Max'],
     },
   ];
+  var _questionIndex = 0; //properties
+
+  void _answerQuestion() {
+    setState(() {
+      _questionIndex = _questionIndex + 1;
+    });
+    if (_questionIndex < questions.length) {
+      print('we have more questions');
+    }
+  }
 
   @override //decorator provided by dart, deliberately overriding build method from StatelessWidget
   Widget build(BuildContext context) {
@@ -43,17 +45,24 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(
-              questions[_questionIndex]['questionText'],
-            ),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(_answerQuestion, answer);
-            }).toList(),
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                children: <Widget>[
+                  Question(
+                    questions[_questionIndex]['questionText'],
+                  ),
+                  ...(questions[_questionIndex]['answers'] as List<String>)
+                      .map((answer) {
+                    return Answer(_answerQuestion, answer);
+                  }).toList(),
+                ],
+              )
+            : Center(
+                child: Text(
+                  'You did it',
+                  style: TextStyle(fontSize: 28),
+                ),
+              ),
       ),
     ); //does base setup
   }
