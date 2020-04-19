@@ -37,17 +37,22 @@ class TransactionList extends StatelessWidget {
                   ),
                   padding: EdgeInsets.all(5),
                 ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-                    Widget>[
-                  Text(
-                    _userTransactions[index].title,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    DateFormat.yMMMd().format(_userTransactions[index].date),
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ]),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      _userTransactions[index].title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      DateFormat.yMMMd().format(_userTransactions[index].date),
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
               ],
             ),
           );
