@@ -35,6 +35,10 @@ foo = [1, 2, 3]; // was const[]
 
 Bovenstaande is een geldige operatie want de value was cosnt, niet de variabele
 
+### Null
+
+
+
 ## Basic Flutter
 
 ```dart
@@ -293,5 +297,101 @@ add a leading underscore on the classname to make it private. Now its only usabl
 
 ![image-20200418152640882](C:\src\flutterprojects\flutter_app\notes.assets\image-20200418152640882.png)
 
-### passing callback functions around
 
+
+### Should I Split it?
+
+its better to have smaller widgets then big widgets. Its also better for performance.
+
+
+
+## Testing and Debugging
+
+- how to run app on multiple platforms.
+- how to read and understand error messages
+- vs code debugger
+- using dart devtools & flutter inspector
+  - https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/learn/lecture/14950958#content
+
+## Common Widgets
+
+- https://flutter.dev/docs/development/ui/widgets
+
+App_Page Setup
+
+- MaterialApp/CupertinoApp
+- Scaffold / CupertinoPageScaffold
+
+Layout
+
+- Container
+- Row
+- Column
+
+Row / Column Children
+
+- Flexible
+- Expanded
+
+Content Containers
+
+- Stack (position on top of eachother)
+- Card
+
+Repeating (content Elements)
+
+- ListView (scrollable)
+- GridView (scrollable)
+- ListTile 
+
+Content Types
+
+- Text
+- Image
+- Icon 
+
+User Input
+
+- TextField
+- RaisedButton / FlatButton
+- GestureDetector / InkWell (with splash animation)
+
+### Column Row and Container
+
+**Column**
+
+takes multiple child widgets
+
+Has aligment options:
+
+- Main Axis is top to bottom.
+- Cross Axis is left to right.
+
+no styling options
+
+```dart
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+```
+
+**Row**
+
+takes multiple widgets
+
+has alignment options:
+
+- Main Axis is left to right.
+- Cross Axis is top to bottom.
+
+no styling options
+
+**Container**
+
+- Takes exactly one child widget.
+- Rich alignment & styling options.
+- Flexible width, (child width, available width)
+- perfect for custom styling & alignment.
+
+Combine Container and Column/Row for maximum styling!
