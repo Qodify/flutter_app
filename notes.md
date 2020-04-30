@@ -369,6 +369,8 @@ Has aligment options:
 
 no styling options
 
+Column takes all the height it can get.
+
 ```dart
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -395,3 +397,83 @@ no styling options
 - perfect for custom styling & alignment.
 
 Combine Container and Column/Row for maximum styling!
+
+### ListView
+
+ListView takes infinite height.
+A Column takes all the height it can get.
+
+so 
+
+```
+Column(
+	children:<Widget>[
+		ListView()
+	]
+)
+```
+
+is a bad combination because the ListView has infinite height and the column will try to take all the height it can get, so infinite height. This throws an error.
+
+ListView has a builder() method.
+
+ShowModalBottomSheet
+
+
+
+### Flexible and Expanded
+
+inside of a column or a row, the items inside will take up as much as they need to take, not bigger, not larger.
+
+Flexible.tight takes remainding space, but doesn't squeeze the other elements in column or row
+
+
+
+### Summary
+
+- Lift state up!
+- pass functions references and data
+- adjust the UI to logic
+
+
+
+what does responsive mean?
+
+handle different device sizes. and handle different modes portrait and landscape. tablet, Desktop, PC.
+
+what does Adaptive Mean?
+with one code base use the right Android and iOS widgets
+
+MaterialApp =/= CupertinoApp.
+
+One Codebase / Project => One Widget Tree.
+Different Leaves 
+
+`if(Platform.isIOS){//do Cupertino}`
+
+
+
+## Widget tree & Element Tree
+
+There is the widget tree , an element tree and a render tree.
+
+Widget Tree = Configuration settings (will rebuild on every build() method)
+Element Tree = Links Widgets to (rarely rebuilds)
+Render Tree = Rendered objects on the screen (rarely rebuilds)
+
+## "Good Code"
+
+two important pieces.
+
+- readable and understandable
+  - understand your code (in a year from now)
+  - others understand your code
+- performant code
+  - certain practices (can) improve performance
+  - some possible improvement 
+  - always re-evaluate code, explore new best practices
+
+
+
+
+
