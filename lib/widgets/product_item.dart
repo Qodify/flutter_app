@@ -27,8 +27,15 @@ class ProductItem extends StatelessWidget {
             builder: (ctx, product, _) => IconButton(
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
-              onPressed: () {
-                product.toggleFavoriteStatus();
+              onPressed: () async {
+                try {
+                  await product.toggleFavoriteStatus();
+                } catch (error) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: const Text('Not added to favorites'),
+                    backgroundColor: Theme.of(context).errorColor,
+                  ));
+                }
               },
               //label: child.toString(),
               color: Theme.of(context).accentColor,

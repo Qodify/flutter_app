@@ -17,22 +17,22 @@ class CartScreen extends StatelessWidget {
       body: Column(children: <Widget>[
         Card(
           elevation: 3,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(100),
                 bottomRight: Radius.circular(100)),
           ),
-          margin: EdgeInsets.only(bottom: 7.5),
+          margin: const EdgeInsets.only(bottom: 7.5),
           child: Padding(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 const Text(
                   'Total',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Chip(
@@ -43,39 +43,66 @@ class CartScreen extends StatelessWidget {
                   ),
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
-                FlatButton(
-                  child: Text('ORDER NOW'),
-                  onPressed: () {
-                    Provider.of<Orders>(context, listen: false).addOrder(
-                      cart.items.values.toList(),
-                      cart.totalAmount,
-                    );
-                    cart.clear();
-                  },
-                  textColor: Theme.of(context).primaryColor,
-                )
+                OrderButton(cart: cart)
               ],
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: cart.items.length,
-            itemBuilder: (ctx, i) {
-              return CartItem(
-                id: cart.items.values.toList()[i].id,
-                price: cart.items.values.toList()[i].price,
-                quantity: cart.items.values.toList()[i].quantity,
-                title: cart.items.values.toList()[i].title,
-                productId: cart.items.keys.toList()[i],
-              );
-            },
-          ),
-        ),
+        cart.itemCount <= 0
+            ? Center(child: Text('No items in the shopping cart'))
+            : Expanded(
+                child: ListView.builder(
+                  itemCount: cart.items.length,
+                  itemBuilder: (ctx, i) {
+                    return CartItem(
+                      id: cart.items.values.toList()[i].id,
+                      price: cart.items.values.toList()[i].price,
+                      quantity: cart.items.values.toList()[i].quantity,
+                      title: cart.items.values.toList()[i].title,
+                      productId: cart.items.keys.toList()[i],
+                    );
+                  },
+                ),
+              ),
       ]),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key key,
+    @required this.cart,
+  }) : super(key: key);
+
+  final Cart cart;
+
+  @override
+  _OrderButtonState createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  var _isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: _isLoading ? CircularProgressIndicator() : const Text('ORDER NOW'),
+      onPressed: widget.cart.totalAmount <= 0 || _isLoading
+          ? null
+          : () async {
+              setState(() => _isLoading = true);
+              await Provider.of<Orders>(context, listen: false).addOrder(
+                widget.cart.items.values.toList(),
+                widget.cart.totalAmount,
+              );
+              setState(() => _isLoading = false);
+
+              widget.cart.clear();
+            },
+      textColor: Theme.of(context).primaryColor,
     );
   }
 }
