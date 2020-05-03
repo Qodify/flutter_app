@@ -21,17 +21,17 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  Future<void> toggleFavoriteStatus(String token, String userId) async {
+  Future<void> toggleFavoriteStatus(String token) async {
     final url =
-        'https://flutter-project-dade8.firebaseio.com/userFavorites/$userId/$id.json?auth=$token';
+        'https://flutter-project-dade8.firebaseio.com/products/$id.json?auth=$token';
 
     isFavorite = !isFavorite;
     notifyListeners();
     try {
-      final response = await http.put(
-        url,
-        body: json.encode(isFavorite),
-      );
+      final response = await http.patch(url,
+          body: json.encode({
+            'isFavorite': isFavorite,
+          }));
 
       if (response.statusCode >= 400) {
         isFavorite = !isFavorite;
@@ -39,7 +39,6 @@ class Product with ChangeNotifier {
         throw HttpException('isFavorite not toggled succesfully');
       }
     } catch (e) {
-      print(e);
       isFavorite = !isFavorite;
       notifyListeners();
       throw e;
